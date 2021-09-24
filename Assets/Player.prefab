@@ -135,6 +135,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  joystick: {fileID: 0}
   MoveSpeed: 5
   QuietMoveSpeed: 2
   JumpHeight: 50

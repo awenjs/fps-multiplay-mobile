@@ -4,6 +4,7 @@ using UnityEngine;
 using Mirror;
 public class PlayerMove : NetworkBehaviour
 {
+    public Joystick joystick;
     private CharacterController _characterController;
     private Transform _characterTransform;
     private Vector3 _moveDirection;
@@ -11,8 +12,11 @@ public class PlayerMove : NetworkBehaviour
     float currentSpeed;
     public float JumpHeight;
     public float Gravity;
+
+    public bool PC;
     void Start()
     {
+        joystick = GameObject.Find("Fixed Joystick").GetComponent<Joystick>();
         _characterController = GetComponent<CharacterController>();
         _characterTransform = transform;
     }
@@ -21,6 +25,8 @@ public class PlayerMove : NetworkBehaviour
         if(!hasAuthority)return;
         Move();
         Crouch();
+        if(PC) return;
+        MobileMove();
     }
     void Move()
     {
@@ -46,5 +52,18 @@ public class PlayerMove : NetworkBehaviour
             _characterController.height = 2;
         }
         
+    }
+
+    void MobileMove()
+    {
+        //currentSpeed = Input.GetKey(KeyCode.LeftShift) ? QuietMoveSpeed : MoveSpeed;
+        var horizontal = joystick.Horizontal;
+        var vertical = joystick.Vertical;
+        _moveDirection = _characterTransform.TransformDirection(horizontal, 0, vertical);
+        if (!_characterController.isGrounded)
+        {
+            _moveDirection.y -= Gravity * Time.deltaTime;
+        }
+        _characterController.Move(_moveDirection * Time.deltaTime * currentSpeed);
     }
 }

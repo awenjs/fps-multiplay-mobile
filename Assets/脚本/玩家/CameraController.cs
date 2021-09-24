@@ -11,9 +11,11 @@ public class CameraController : NetworkBehaviour
     public float mouseSensitivity; //鼠标灵敏度
     public float xRotation;
 
+    public bool PC;
     public override void OnStartAuthority()
     {
         cam.SetActive(true);
+        if(!PC) return;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
