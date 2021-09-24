@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     public Text Ammo() => _ammo_Text;
     public Text Health() => _health_Text;
     public GameObject Camera() => MainCamera;
-
+    public bool PC = true;
     void Update()
     {
         var fps = 1 / Time.deltaTime;

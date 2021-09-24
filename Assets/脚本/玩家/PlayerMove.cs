@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,11 +10,13 @@ public class PlayerMove : NetworkBehaviour
     private Transform _characterTransform;
     private Vector3 _moveDirection;
     public float MoveSpeed , QuietMoveSpeed; 
-    float currentSpeed;
+    public float currentSpeed;
     public float JumpHeight;
     public float Gravity;
+    GameManager _gameManager;
 
-    public bool PC;
+    void Awake() => _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
     void Start()
     {
         joystick = GameObject.Find("Fixed Joystick").GetComponent<Joystick>();
@@ -23,10 +26,10 @@ public class PlayerMove : NetworkBehaviour
     void Update()
     {
         if(!hasAuthority)return;
+        MobileMove();
+        if(!_gameManager.PC) return;
         Move();
         Crouch();
-        if(PC) return;
-        MobileMove();
     }
     void Move()
     {
@@ -56,7 +59,6 @@ public class PlayerMove : NetworkBehaviour
 
     void MobileMove()
     {
-        //currentSpeed = Input.GetKey(KeyCode.LeftShift) ? QuietMoveSpeed : MoveSpeed;
         var horizontal = joystick.Horizontal;
         var vertical = joystick.Vertical;
         _moveDirection = _characterTransform.TransformDirection(horizontal, 0, vertical);

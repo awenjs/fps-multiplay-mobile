@@ -138,6 +138,7 @@ MonoBehaviour:
   joystick: {fileID: 0}
   MoveSpeed: 5
   QuietMoveSpeed: 2
+  currentSpeed: 5
   JumpHeight: 50
   Gravity: 400
 --- !u!114 &1329793410332334199
@@ -156,7 +157,7 @@ MonoBehaviour:
   syncInterval: 0.1
   player: {fileID: 3179833010892693962}
   cam: {fileID: 6498470620739254776}
-  mouseSensitivity: 250
+  mouseSensitivity: 10
   xRotation: 0
 --- !u!114 &7293007286195232494
 MonoBehaviour:
