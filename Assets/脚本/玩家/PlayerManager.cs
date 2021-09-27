@@ -30,7 +30,7 @@ public class PlayerManager : NetworkBehaviour
 
     void ChangeLocalPlayerLayer() => gameObject.layer = LayerMask.NameToLayer( LocalPlayerLayer );
 
-    public void MainCameraState(bool check) => _gameManager.Camera().SetActive(check);
+    public void MainCameraState(bool check) => _gameManager.Camera.SetActive(check);
 
     void OnCollisionEnter(Collision other)
     {

@@ -4,15 +4,13 @@ using 脚本.玩家.枪械;
 
 public class PlayerUIManager : NetworkBehaviour
 {
+    GameManager      _gameManager;
     Health           _playerHealth;
     WeaponController _weaponController;
-    GameManager      _gameManager;
     void Awake()
     {
         _gameManager = GameObject.Find( "GameManager" ).GetComponent<GameManager>();
     }
-    
-    [Client]
     void Update()
     {
         if ( !hasAuthority ) return;
@@ -23,23 +21,36 @@ public class PlayerUIManager : NetworkBehaviour
 
     public override void OnStartAuthority()
     {
-        OpenUI();
         _weaponController = GetComponent<WeaponController>();
         _playerHealth = GetComponent<Health>();
+        OpenUI();
+        PlayerAliveUI();
+    }
+
+    public void PlayerDead()
+    {
+        _gameManager._deadUI.SetActive( true );
+        _gameManager._aliveUI.SetActive( false );
+    }
+
+    void PlayerAliveUI()
+    { 
+        _gameManager._deadUI.SetActive( false );
+        _gameManager._aliveUI.SetActive( true );
     }
 
     void UpdatePlayerAmmo()
     {
         var currentWeapon = _weaponController.CurrentWeapon;
-        _gameManager.Ammo().text = currentWeapon.CurrentAmmo + "/" + currentWeapon.AllAmmo;
+        _gameManager.Ammo.text = currentWeapon.CurrentAmmo + "/" + currentWeapon.AllAmmo;
     }
 
     void UpdatePlayerHealth()
     {
         var currentHealth = _playerHealth;
-        _gameManager.Health().text = currentHealth.CurrentHealth.ToString();
+        _gameManager.Health.text = currentHealth.CurrentHealth.ToString();
     }
-    
+
     void OpenUI()
     {
         enabled = true;

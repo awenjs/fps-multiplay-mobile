@@ -4,16 +4,17 @@ using UnityEngine;
 
 public class Health : NetworkBehaviour
 {
-    [SerializeField] PlayerManager _playerManager;
-    [SerializeField] int _maxHealth;
-
-    [field: SyncVar( hook = nameof( OnHealthChangedEvent ) )]
+    [SerializeField] PlayerUIManager _playerUIManager;
+    [SerializeField] PlayerManager   _playerManager;
+    [SerializeField] int             _maxHealth;
+    [field: SyncVar]
     public int CurrentHealth { get; private set; }
 
-    void Awake() => CurrentHealth = _maxHealth;
-
-    public event Action<int, int> OnHealthChanged;
-    public event Action           OnDeath;
+    void Awake()
+    {
+        CurrentHealth = _maxHealth;
+    }
+    
 
     [Server]
     public void Damage( int damage )
@@ -30,15 +31,12 @@ public class Health : NetworkBehaviour
 
         CurrentHealth = result;
     }
-
-    void OnHealthChangedEvent( int oldHealth, int newHealth ) => OnHealthChanged?.Invoke( oldHealth, newHealth );
-
     void DoDie()
     {
-        Destroy(gameObject);
-        _playerManager.MainCameraState(true);
-        OnDeath?.Invoke();
+        Cursor.lockState = CursorLockMode.None;
+        _playerUIManager.PlayerDead();
+        _playerManager.MainCameraState( true );
         Debug.Log( "dead" );
-        
+        NetworkServer.Destroy( gameObject );
     }
 }
