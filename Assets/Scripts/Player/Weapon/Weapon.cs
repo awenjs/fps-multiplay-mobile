@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using 脚本.玩家.枪械;
 using Random = UnityEngine.Random;
 
 public class Weapon : MonoBehaviour

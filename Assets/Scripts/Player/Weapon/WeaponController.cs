@@ -1,7 +1,7 @@
 using Mirror;
 using UnityEngine;
 
-namespace 脚本.玩家.枪械
+namespace Player.Weapon
 {
     public class WeaponController : NetworkBehaviour
     {
@@ -14,12 +14,11 @@ namespace 脚本.玩家.枪械
             _mainWeaponButton,
             _meleeWeaponButton;
 
-        Transform   _cam;
-        Weapon      _defaultWeapon;
-        GameManager _gameManager;
-        float       _lastFireTime;
-
-        public Weapon CurrentWeapon { get; private set; }
+        Transform             _cam;
+        global::Weapon        _defaultWeapon;
+        GameManager           _gameManager;
+        float                 _lastFireTime;
+        public global::Weapon CurrentWeapon { get; private set; }
 
         void Awake()
         {
@@ -45,7 +44,7 @@ namespace 脚本.玩家.枪械
             SwapWeapon( _defaultWeapon );
         }
 
-        void SwapWeapon( Weapon newWeapon )
+        void SwapWeapon( global::Weapon newWeapon )
         {
             if ( newWeapon == null ) return;
 
