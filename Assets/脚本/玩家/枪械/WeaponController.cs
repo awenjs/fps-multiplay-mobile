@@ -8,12 +8,18 @@ namespace 脚本.玩家.枪械
         [SerializeField] Transform _hand;
         [SerializeField] Bag       _guns;
         [SerializeField] LayerMask _mask;
-        FixedButton                _attackButton, _reloadButton, _mainWeaponButton, _meleeWeaponButton;
-        Transform                     _cam;
-        Weapon                     _defaultWeapon;
-        GameManager                _gameManager;
-        float                      _lastFireTime;
-        public Weapon              CurrentWeapon { get; private set; }
+
+        FixedButton _attackButton,
+            _reloadButton,
+            _mainWeaponButton,
+            _meleeWeaponButton;
+
+        Transform   _cam;
+        Weapon      _defaultWeapon;
+        GameManager _gameManager;
+        float       _lastFireTime;
+
+        public Weapon CurrentWeapon { get; private set; }
 
         void Awake()
         {
@@ -29,10 +35,10 @@ namespace 脚本.玩家.枪械
         }
         public override void OnStartAuthority()
         {
-            _attackButton = GameObject.Find( "Shoot" ).GetComponent<FixedButton>();
-            _reloadButton = GameObject.Find( "Reload" ).GetComponent<FixedButton>();
-            _mainWeaponButton = GameObject.Find( "MainWeapon" ).GetComponent<FixedButton>();
-            _meleeWeaponButton = GameObject.Find( "Melee" ).GetComponent<FixedButton>();
+            _attackButton = GameObject.Find( "ShootButton" ).GetComponent<FixedButton>();
+            _reloadButton = GameObject.Find( "ReloadButton" ).GetComponent<FixedButton>();
+            _mainWeaponButton = GameObject.Find( "MainWeaponButton" ).GetComponent<FixedButton>();
+            _meleeWeaponButton = GameObject.Find( "MeleeButton" ).GetComponent<FixedButton>();
             _cam = Camera.main.transform;
             _guns = GetComponent<Bag>();
             _defaultWeapon = _guns.Knife;
@@ -57,7 +63,7 @@ namespace 脚本.玩家.枪械
 
         void DoAttack()
         {
-            if ( !Input.GetMouseButton( 0 ) && !_attackButton.Pressed ) return;
+            if ( !_attackButton.Pressed ) return;
             if ( CurrentWeapon.CurrentAmmo == 0 || !CurrentWeapon.IsAllowedToAttack( _lastFireTime ) ) return;
 
             _lastFireTime = Time.time;
