@@ -1,6 +1,4 @@
-using System;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class Weapon : MonoBehaviour
 {
@@ -15,15 +13,14 @@ public class Weapon : MonoBehaviour
     readonly int _attackAnimHash = Animator.StringToHash( "attack" );
     readonly int _reloadAnimHash = Animator.StringToHash( "reload" );
 
-    Animator _anim;
-
+    Animator     _anim;
     public int   CurrentAmmo => _currentAmmo;
     public int   MagAmmo     => _magAmmo;
     public int   AllAmmo     => _allAmmo;
     public float FireRate    => _fireRate;
     public float WeaponRange => _weaponRange;
-    public void GiveAmmo(int ammo) => _allAmmo += ammo;
     void Start() => _anim = GetComponent<Animator>();
+    public void GiveAmmo( int ammo ) => _allAmmo += ammo;
 
     public int GetDamage() => Random.Range( _damage - 5, _damage + 5 );
 

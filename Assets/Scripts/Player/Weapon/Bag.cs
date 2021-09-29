@@ -1,7 +1,7 @@
 using Mirror;
 using UnityEngine;
 
-namespace Player.Weapon
+namespace MobileFPS.PlayerWeapon
 {
     public class Bag : NetworkBehaviour
     {

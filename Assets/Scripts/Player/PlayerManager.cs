@@ -1,8 +1,8 @@
 using Mirror;
-using Player.Weapon;
+using MobileFPS.PlayerWeapon;
 using UnityEngine;
 
-namespace Player
+namespace MobileFPS.Player
 {
     public class PlayerManager : NetworkBehaviour
     {

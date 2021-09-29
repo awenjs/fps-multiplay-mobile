@@ -1,7 +1,8 @@
 using Mirror;
+using MobileFPS.PlayerHealth;
 using UnityEngine;
 
-namespace Player.Weapon
+namespace MobileFPS.PlayerWeapon
 {
     public class WeaponController : NetworkBehaviour
     {
@@ -14,11 +15,11 @@ namespace Player.Weapon
             _mainWeaponButton,
             _meleeWeaponButton;
 
-        Transform             _cam;
-        global::Weapon        _defaultWeapon;
-        GameManager           _gameManager;
-        float                 _lastFireTime;
-        public global::Weapon CurrentWeapon { get; private set; }
+        Transform      _cam;
+        Weapon _defaultWeapon;
+        GameManager    _gameManager;
+        float          _lastFireTime;
+        public Weapon  CurrentWeapon { get; private set; }
 
         void Awake()
         {

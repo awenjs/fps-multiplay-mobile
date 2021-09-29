@@ -1,7 +1,7 @@
 ﻿using Mirror;
 using UnityEngine;
 
-namespace Player
+namespace MobileFPS.PlayerHealth
 {
     public class CameraController : NetworkBehaviour
     {

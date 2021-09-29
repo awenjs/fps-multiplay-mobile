@@ -1,7 +1,7 @@
 using Mirror;
 using UnityEngine;
 
-namespace Player
+namespace MobileFPS.PlayerControl
 {
     public class PlayerMove : NetworkBehaviour
     {

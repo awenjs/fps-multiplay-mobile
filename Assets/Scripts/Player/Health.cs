@@ -1,7 +1,9 @@
 using Mirror;
+using MobileFPS.Player;
+using MobileFPS.PlayerUI;
 using UnityEngine;
 
-namespace Player
+namespace MobileFPS.PlayerHealth
 {
     public class Health : NetworkBehaviour
     {

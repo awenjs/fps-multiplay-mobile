@@ -1,4 +1,5 @@
-using Player;
+using MobileFPS.PlayerHealth;
+using MobileFPS.PlayerUI;
 using UnityEngine;
 using UnityEngine.UI;
 
