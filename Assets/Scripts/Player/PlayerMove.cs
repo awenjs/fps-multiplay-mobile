@@ -12,10 +12,12 @@ namespace MobileFPS.PlayerControl
         public float        Gravity;
         CharacterController _characterController;
         Transform           _characterTransform;
+        GameManager         _gameManager;
         Vector3             _moveDirection;
 
         void Start()
         {
+            _gameManager = GameObject.Find( "GameManager" ).GetComponent<GameManager>();
             joystick = GameObject.Find( "Floating Joystick" ).GetComponent<FloatingJoystick>();
             _characterController = GetComponent<CharacterController>();
             _characterTransform = transform;
@@ -24,15 +26,10 @@ namespace MobileFPS.PlayerControl
         {
             if ( !hasAuthority ) return;
 
-            if ( Application.platform == RuntimePlatform.Android )
-            {
-                MobileMove();
-            }
-            else
-            {
+            if ( _gameManager.PCmode )
                 Move();
-                Crouch();
-            }
+            else
+                MobileMove();
         }
         void Move()
         {

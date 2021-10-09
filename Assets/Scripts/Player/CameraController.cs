@@ -1,4 +1,5 @@
-﻿using Mirror;
+﻿using System;
+using Mirror;
 using UnityEngine;
 
 namespace MobileFPS.PlayerHealth
@@ -7,17 +8,22 @@ namespace MobileFPS.PlayerHealth
     {
         [SerializeField] Transform player;
         [SerializeField] Transform cam;
-        public           float     mouseSensitivity;
-        public           float     mobileSensitivity;
+        GameManager                _gameManager;
+        public float               mouseSensitivity;
+        public float               mobileSensitivity;
         float                      xRotation;
         void Update()
         {
             if ( !hasAuthority ) return;
             //本地验证
-            if(Application.platform == RuntimePlatform.Android)
-                mobileInput();
-            else
+            if(_gameManager.PCmode)
                 Camera();
+            else
+                mobileInput();
+        }
+        void Start()
+        {
+            _gameManager = GameObject.Find( "GameManager" ).GetComponent<GameManager>();
         }
         public override void OnStartAuthority()
         {

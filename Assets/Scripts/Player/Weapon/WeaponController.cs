@@ -35,6 +35,7 @@ namespace MobileFPS.PlayerWeapon
         }
         public override void OnStartAuthority()
         {
+            _gameManager = GameObject.Find( "GameManager" ).GetComponent<GameManager>();
             _attackButton = GameObject.Find( "ShootButton" ).GetComponent<FixedButton>();
             _reloadButton = GameObject.Find( "ReloadButton" ).GetComponent<FixedButton>();
             _mainWeaponButton = GameObject.Find( "MainWeaponButton" ).GetComponent<FixedButton>();
@@ -63,7 +64,10 @@ namespace MobileFPS.PlayerWeapon
 
         void DoAttack()
         {
-            if ( !_attackButton.Pressed ) return;
+            if(_gameManager.PCmode) 
+                if ( !Input.GetMouseButton( 0 ) ) return;
+            else
+                if ( !_attackButton.Pressed ) return;
             if ( CurrentWeapon.CurrentAmmo == 0 || !CurrentWeapon.IsAllowedToAttack( _lastFireTime ) ) return;
 
             _lastFireTime = Time.time;
