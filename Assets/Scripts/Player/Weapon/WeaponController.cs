@@ -15,11 +15,11 @@ namespace MobileFPS.PlayerWeapon
             _mainWeaponButton,
             _meleeWeaponButton;
 
-        Transform      _cam;
-        Weapon _defaultWeapon;
-        GameManager    _gameManager;
-        float          _lastFireTime;
-        public Weapon  CurrentWeapon { get; private set; }
+        Transform     _cam;
+        Weapon        _defaultWeapon;
+        GameManager   _gameManager;
+        float         _lastFireTime;
+        public Weapon CurrentWeapon { get; private set; }
 
         void Awake()
         {
@@ -45,7 +45,7 @@ namespace MobileFPS.PlayerWeapon
             SwapWeapon( _defaultWeapon );
         }
 
-        void SwapWeapon( global::Weapon newWeapon )
+        void SwapWeapon( Weapon newWeapon )
         {
             if ( newWeapon == null ) return;
 

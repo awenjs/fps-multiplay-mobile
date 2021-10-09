@@ -25,7 +25,6 @@ public class Weapon : MonoBehaviour
     public int GetDamage() => Random.Range( _damage - 5, _damage + 5 );
 
     public void DoAnimAttack() => _anim.Play( _attackAnimHash, 0, 0 );
-
     public void DoAnimReload() => _anim.Play( _reloadAnimHash, 0, 0 );
 
     public virtual void UseAmmo() => _currentAmmo--;
