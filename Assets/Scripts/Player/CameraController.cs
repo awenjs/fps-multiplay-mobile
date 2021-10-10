@@ -16,19 +16,24 @@ namespace MobileFPS.PlayerHealth
         {
             if ( !hasAuthority ) return;
             //本地验证
-            if(_gameManager.PCmode)
+            if ( _gameManager.PCmode )
+            {
                 Camera();
+            }
             else
+            {
                 mobileInput();
+            }
         }
         void Start()
         {
-            _gameManager = GameObject.Find( "GameManager" ).GetComponent<GameManager>();
+            
         }
         public override void OnStartAuthority()
         {
+            _gameManager = GameObject.Find( "GameManager" ).GetComponent<GameManager>();
             cam.gameObject.SetActive( true );
-            //Cursor.lockState = CursorLockMode.Locked;
+            if(_gameManager.PCmode) Cursor.lockState = CursorLockMode.Locked;
         }
 
         void CameraMobile( Vector2 vec )

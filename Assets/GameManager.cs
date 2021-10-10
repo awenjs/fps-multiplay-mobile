@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     {
         _deadUI.SetActive( false );
         _aliveUI.SetActive( false );
+        Application.targetFrameRate = 144;
     }
     void Update()
     {

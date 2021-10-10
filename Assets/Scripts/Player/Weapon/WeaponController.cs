@@ -64,10 +64,14 @@ namespace MobileFPS.PlayerWeapon
 
         void DoAttack()
         {
-            if(_gameManager.PCmode) 
+            if ( _gameManager.PCmode )
+            {
                 if ( !Input.GetMouseButton( 0 ) ) return;
+            }
             else
+            {
                 if ( !_attackButton.Pressed ) return;
+            }
             if ( CurrentWeapon.CurrentAmmo == 0 || !CurrentWeapon.IsAllowedToAttack( _lastFireTime ) ) return;
 
             _lastFireTime = Time.time;
