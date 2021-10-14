@@ -6,24 +6,18 @@ namespace MobileFPS.PlayerWeapon
 {
     public class WeaponController : NetworkBehaviour
     {
-        [SerializeField] Transform _hand;
-        [SerializeField] Bag       _guns;
-        [SerializeField] LayerMask _mask;
-
-        FixedButton _attackButton,
-            _reloadButton,
-            _mainWeaponButton,
-            _meleeWeaponButton;
-
-        Transform     _cam;
-        Weapon        _defaultWeapon;
-        GameManager   _gameManager;
-        float         _lastFireTime;
-        public Weapon CurrentWeapon { get; private set; }
-
+        [SerializeField]         Transform _hand;
+        [SerializeField]         Bag       _guns;
+        [HideInInspector] public Weapon    CurrentWeapon;
+        
+        [SerializeField] float   aimSpeed;
+        Transform                _cam;
+        Weapon                   _defaultWeapon;
+        float                    _lastFireTime;
+        CameraController         _cameraController;
+        public bool  IsAttack;
         void Awake()
         {
-            _gameManager = GameObject.Find( "GameManager" ).GetComponent<GameManager>();
         }
         void Update()
         {
@@ -35,14 +29,10 @@ namespace MobileFPS.PlayerWeapon
         }
         public override void OnStartAuthority()
         {
-            _gameManager = GameObject.Find( "GameManager" ).GetComponent<GameManager>();
-            _attackButton = GameObject.Find( "ShootButton" ).GetComponent<FixedButton>();
-            _reloadButton = GameObject.Find( "ReloadButton" ).GetComponent<FixedButton>();
-            _mainWeaponButton = GameObject.Find( "MainWeaponButton" ).GetComponent<FixedButton>();
-            _meleeWeaponButton = GameObject.Find( "MeleeButton" ).GetComponent<FixedButton>();
             _cam = Camera.main.transform;
+            _cameraController = GetComponent<CameraController>();
             _guns = GetComponent<Bag>();
-            _defaultWeapon = _guns.Knife;
+            _defaultWeapon = _guns.MainWeapon;
             SwapWeapon( _defaultWeapon );
         }
 
@@ -58,22 +48,15 @@ namespace MobileFPS.PlayerWeapon
 
         void DoSwapWeapon()
         {
-            if ( Input.GetKeyDown( KeyCode.Alpha1 ) || _mainWeaponButton.Pressed ) SwapWeapon( _guns.MainWeapon );
-            if ( Input.GetKeyDown( KeyCode.Alpha3 ) || _meleeWeaponButton.Pressed ) SwapWeapon( _guns.Knife );
+            if ( Input.GetKeyDown( KeyCode.Alpha1 ) ) SwapWeapon( _guns.MainWeapon );
         }
 
         void DoAttack()
         {
-            if ( _gameManager.PCmode )
-            {
-                if ( !Input.GetMouseButton( 0 ) ) return;
-            }
-            else
-            {
-                if ( !_attackButton.Pressed ) return;
-            }
+            if ( !Input.GetMouseButton( 0 ) ) return;
             if ( CurrentWeapon.CurrentAmmo == 0 || !CurrentWeapon.IsAllowedToAttack( _lastFireTime ) ) return;
-
+            
+            _cameraController.Recoil( CurrentWeapon.WeaponRecoilY );
             _lastFireTime = Time.time;
             CurrentWeapon.UseAmmo();
             CmdRequestAttack( _cam.position, _cam.forward, CurrentWeapon.GetDamage(), CurrentWeapon.WeaponRange );
@@ -83,7 +66,7 @@ namespace MobileFPS.PlayerWeapon
 
         void DoReload()
         {
-            if ( !Input.GetKeyDown( KeyCode.R ) && !_reloadButton.Pressed ) return;
+            if ( !Input.GetKeyDown( KeyCode.R ) ) return;
 
             if ( CurrentWeapon.CurrentAmmo == CurrentWeapon.MagAmmo || CurrentWeapon.AllAmmo == 0 ) return;
 

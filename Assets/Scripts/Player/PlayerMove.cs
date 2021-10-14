@@ -1,24 +1,26 @@
 using Mirror;
+using MobileFPS.PlayerWeapon;
 using UnityEngine;
 
 namespace MobileFPS.PlayerControl
 {
     public class PlayerMove : NetworkBehaviour
     {
-        public Joystick     joystick;
-        public float        MoveSpeed, QuietMoveSpeed;
-        public float        currentSpeed;
-        public float        JumpHeight;
-        public float        Gravity;
-        CharacterController _characterController;
-        Transform           _characterTransform;
-        GameManager         _gameManager;
-        Vector3             _moveDirection;
+        static readonly int   velocity = Animator.StringToHash( "velocity" );
+        public          float AimSpeed, MoveSpeed, RunSpeed;
+        public          float currentSpeed;
+        public          float JumpHeight;
+        public          float Gravity;
+        CharacterController   _characterController;
+        Transform             _characterTransform;
+        Aim                   _gunAimState;
+        Vector3               _moveDirection;
+        WeaponController      _weaponController;
 
         void Start()
         {
-            _gameManager = GameObject.Find( "GameManager" ).GetComponent<GameManager>();
-            joystick = GameObject.Find( "Floating Joystick" ).GetComponent<FloatingJoystick>();
+            _gunAimState = GetComponentInChildren<Aim>();
+            _weaponController = GetComponent<WeaponController>();
             _characterController = GetComponent<CharacterController>();
             _characterTransform = transform;
         }
@@ -26,35 +28,28 @@ namespace MobileFPS.PlayerControl
         {
             if ( !hasAuthority ) return;
 
-            if ( _gameManager.PCmode )
-                Move();
-            else
-                MobileMove();
+            Move();
+            Crouch();
         }
         void Move()
         {
-            currentSpeed = Input.GetKey( KeyCode.LeftShift ) ? QuietMoveSpeed : MoveSpeed;
+            float tmpSpeed = Input.GetKey( KeyCode.LeftShift ) ? RunSpeed : MoveSpeed;
+            currentSpeed = _gunAimState.IsAiming ? AimSpeed : tmpSpeed;
+            if ( _weaponController.IsAttack ) currentSpeed = AimSpeed;
             float horizontal = Input.GetAxis( "Horizontal" );
             float vertical = Input.GetAxis( "Vertical" );
-            _moveDirection = _characterTransform.TransformDirection( horizontal, 0, vertical );
+            _moveDirection = _characterTransform.TransformDirection( horizontal, 0, vertical ).normalized;
             if ( !_characterController.isGrounded ) _moveDirection.y -= Gravity * Time.deltaTime;
             _characterController.Move( _moveDirection * Time.deltaTime * currentSpeed );
+            var currentWeaponAnim = _weaponController.CurrentWeapon;
+            Debug.Log( _characterController.velocity.magnitude );
+            if ( _gunAimState.IsAiming ) currentWeaponAnim.DoAnimMovement( 0 );
+            else currentWeaponAnim.DoAnimMovement( _characterController.velocity.magnitude );
         }
 
         void Crouch()
         {
-            if ( Input.GetKey( KeyCode.LeftControl ) ) _characterController.height = 1;
-            else _characterController.height = 2;
-
-        }
-
-        void MobileMove()
-        {
-            float horizontal = joystick.Horizontal;
-            float vertical = joystick.Vertical;
-            _moveDirection = _characterTransform.TransformDirection( horizontal, 0, vertical );
-            if ( !_characterController.isGrounded ) _moveDirection.y -= Gravity * Time.deltaTime;
-            _characterController.Move( _moveDirection * Time.deltaTime * currentSpeed );
+            _characterController.height = Input.GetKey( KeyCode.LeftControl ) ? 1 : 2;
         }
     }
 }

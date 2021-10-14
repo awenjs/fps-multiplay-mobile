@@ -15,10 +15,10 @@ public class GameManager : MonoBehaviour
     public           GameObject      Camera => MainCamera;
     public           Text            Ammo   => _ammo_Text;
     public           Text            Health => _health_Text;
-    public           bool            PCmode; 
 
     void Awake()
     {
+        MainCamera.SetActive( true );
         _deadUI.SetActive( false );
         _aliveUI.SetActive( false );
         Application.targetFrameRate = 144;
