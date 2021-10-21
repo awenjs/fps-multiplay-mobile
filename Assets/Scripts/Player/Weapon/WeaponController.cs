@@ -15,7 +15,6 @@ namespace MobileFPS.PlayerWeapon
         Weapon                   _defaultWeapon;
         float                    _lastFireTime;
         CameraController         _cameraController;
-        public bool  IsAttack;
         void Awake()
         {
         }
@@ -54,15 +53,14 @@ namespace MobileFPS.PlayerWeapon
         void DoAttack()
         {
             if ( !Input.GetMouseButton( 0 ) ) return;
+
             if ( CurrentWeapon.CurrentAmmo == 0 || !CurrentWeapon.IsAllowedToAttack( _lastFireTime ) ) return;
-            
             _cameraController.Recoil( CurrentWeapon.WeaponRecoilY );
             _lastFireTime = Time.time;
             CurrentWeapon.UseAmmo();
             CmdRequestAttack( _cam.position, _cam.forward, CurrentWeapon.GetDamage(), CurrentWeapon.WeaponRange );
             CurrentWeapon.DoAnimAttack();
         }
-
 
         void DoReload()
         {

@@ -13,6 +13,7 @@ namespace MobileFPS.PlayerUI
         void Awake()
         {
             _gameManager = GameObject.Find( "GameManager" ).GetComponent<GameManager>();
+            
         }
         void Update()
         {
