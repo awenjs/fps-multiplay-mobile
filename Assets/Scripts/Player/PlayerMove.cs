@@ -1,5 +1,6 @@
 using Mirror;
 using MobileFPS.PlayerWeapon;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 namespace MobileFPS.PlayerControl
@@ -16,6 +17,7 @@ namespace MobileFPS.PlayerControl
         Transform             _characterTransform;
         Vector3               _moveDirection;
         WeaponController      _weaponController;
+        public float          PlayerCurrentSpeed;
 
         void Start()
         {
@@ -36,7 +38,7 @@ namespace MobileFPS.PlayerControl
             var currentWeaponAnim = _weaponController.CurrentWeapon;
             float horizontal = Input.GetAxisRaw( "Horizontal" );
             float vertical = Input.GetAxisRaw( "Vertical" );
-
+            
             float tmpSpeed = Input.GetKey( KeyCode.LeftShift ) ? RunSpeed : MoveSpeed;
             if ( _aimScript.IsAim) tmpSpeed = CombatSpeed;
             currentSpeed = tmpSpeed;
@@ -46,10 +48,11 @@ namespace MobileFPS.PlayerControl
             _characterController.Move( _moveDirection * Time.deltaTime * currentSpeed );
             var tmp_Velocity = _characterController.velocity;
             tmp_Velocity.y = 0;
-            //Debug.Log( "当前移速:"tmp_Velocity.magnitude );
+            PlayerCurrentSpeed = tmp_Velocity.magnitude;
+            Debug.Log( "当前移速:" +  PlayerCurrentSpeed);
             
-            if ( _aimScript.IsAim ) currentWeaponAnim.DoAnimMovement( 0 );
-            else currentWeaponAnim.DoAnimMovement( tmp_Velocity.magnitude );
+            if ( _aimScript.IsAim ) currentWeaponAnim._anim.SetFloat( "velocity",0 );
+            else currentWeaponAnim.DoAnimMovement( PlayerCurrentSpeed );
         }
 
         void Crouch()

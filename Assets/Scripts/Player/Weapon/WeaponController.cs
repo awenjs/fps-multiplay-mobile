@@ -1,4 +1,5 @@
 using Mirror;
+using MobileFPS.PlayerControl;
 using MobileFPS.PlayerHealth;
 using UnityEngine;
 
@@ -10,11 +11,13 @@ namespace MobileFPS.PlayerWeapon
         [SerializeField]         Bag       _guns;
         [HideInInspector] public Weapon    CurrentWeapon;
         
-        [SerializeField] float   aimSpeed;
-        Transform                _cam;
-        Weapon                   _defaultWeapon;
-        float                    _lastFireTime;
-        CameraController         _cameraController;
+        [SerializeField] float aimSpeed;
+        Transform              _cam;
+        Weapon                 _defaultWeapon;
+        float                  _lastFireTime;
+        CameraController       _cameraController;
+        PlayerMove             _playerMove;
+        AimScript              _aimScript;
         void Awake()
         {
         }
@@ -28,6 +31,8 @@ namespace MobileFPS.PlayerWeapon
         }
         public override void OnStartAuthority()
         {
+            _aimScript = GetComponentInChildren<AimScript>();
+            _playerMove = GetComponent<PlayerMove>();
             _cam = Camera.main.transform;
             _cameraController = GetComponent<CameraController>();
             _guns = GetComponent<Bag>();
@@ -54,11 +59,14 @@ namespace MobileFPS.PlayerWeapon
         {
             if ( !Input.GetMouseButton( 0 ) ) return;
 
-            if ( CurrentWeapon.CurrentAmmo == 0 || !CurrentWeapon.IsAllowedToAttack( _lastFireTime ) ) return;
+            if ( CurrentWeapon.CurrentAmmo == 0 || !CurrentWeapon.IsAllowedToAttack( _lastFireTime ) || _playerMove.PlayerCurrentSpeed > _playerMove.MoveSpeed) return;
+
             _cameraController.Recoil( CurrentWeapon.WeaponRecoilY );
             _lastFireTime = Time.time;
             CurrentWeapon.UseAmmo();
             CmdRequestAttack( _cam.position, _cam.forward, CurrentWeapon.GetDamage(), CurrentWeapon.WeaponRange );
+            
+            if(_playerMove.PlayerCurrentSpeed > 2) return;
             CurrentWeapon.DoAnimAttack();
         }
 

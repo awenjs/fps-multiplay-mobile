@@ -23,14 +23,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3717128448358909}
-  m_LocalRotation: {x: 0.13565028, y: 0.69397336, z: 0.69397336, w: -0.13565028}
-  m_LocalPosition: {x: -0.19925438, y: -0.135, z: 0.002}
+  m_LocalRotation: {x: 0.043908134, y: 0.7057423, z: 0.7057422, w: -0.043908197}
+  m_LocalPosition: {x: -0.1211, y: -0.135, z: -0.0081}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children:
   - {fileID: 2756017038286896270}
   m_Father: {fileID: 2126581518025184146}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: -157.88}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: -172.88}
 --- !u!1 &112847000324141798
 GameObject:
   m_ObjectHideFlags: 0
@@ -738,10 +738,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  AimSpeed: 1.25
-  MoveSpeed: 5
-  RunSpeed: 10
-  currentSpeed: 5
+  CombatSpeed: 2
+  MoveSpeed: 4
+  RunSpeed: 6
+  currentSpeed: 0
   JumpHeight: 50
   Gravity: 400
 --- !u!114 &1329793410332334199
@@ -814,7 +814,6 @@ MonoBehaviour:
   _guns: {fileID: 8288277591291120434}
   CurrentWeapon: {fileID: 0}
   aimSpeed: 25
-  IsAttack: 0
 --- !u!114 &5143028594113431851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -920,7 +919,6 @@ MonoBehaviour:
   _damage: 15
   _weaponRange: 1000
   _aimPosition: {x: -0.04, y: 0.015, z: 0.05}
-  IsAim: 0
   _anim: {fileID: 0}
 --- !u!1 &3981070765896396195
 GameObject:
@@ -1141,14 +1139,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5212840829576997052}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0.000000055872043, y: -0.000000029143592, z: 0.06574658, w: 0.99783635}
   m_LocalPosition: {x: -0, y: 0.041787386, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5556133859236266241}
   m_Father: {fileID: 4484759567905731997}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 7.539}
 --- !u!1 &5628733951932848814
 GameObject:
   m_ObjectHideFlags: 0
@@ -1312,6 +1310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _notAim: {x: 0.06, y: -0.06, z: 0.22}
+  IsAim: 0
 --- !u!1 &6498470620739254776
 GameObject:
   m_ObjectHideFlags: 0
@@ -1533,14 +1532,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6673666359485753465}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0.000000019557769, y: -0.000000052154054, z: 0.13759428, w: 0.99048865}
   m_LocalPosition: {x: -0, y: 0.05497792, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2459028991004963274}
   m_Father: {fileID: 2756017038286896270}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 15.817}
 --- !u!1 &7227136670307336710
 GameObject:
   m_ObjectHideFlags: 0

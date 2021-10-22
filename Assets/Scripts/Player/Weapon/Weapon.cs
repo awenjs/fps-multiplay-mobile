@@ -12,7 +12,6 @@ public class Weapon : MonoBehaviour
     [SerializeField] int     _damage;
     [SerializeField] float   _weaponRange;
     [SerializeField] Vector3 _aimPosition;
-    public           bool    IsAim;
 
     [HideInInspector] public Animator _anim;
     public                   float    WeaponRecoilX => Random.Range( _weaponRecoilX - 3, _weaponRecoilX + 3 );
