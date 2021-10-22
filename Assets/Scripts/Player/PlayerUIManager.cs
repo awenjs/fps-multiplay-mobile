@@ -2,6 +2,7 @@ using Mirror;
 using MobileFPS.PlayerHealth;
 using MobileFPS.PlayerWeapon;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace MobileFPS.PlayerUI
 {
@@ -10,10 +11,11 @@ namespace MobileFPS.PlayerUI
         GameManager      _gameManager;
         Health           _playerHealth;
         WeaponController _weaponController;
+        Image            _healthBar;
         void Awake()
         {
             _gameManager = GameObject.Find( "GameManager" ).GetComponent<GameManager>();
-            
+            _healthBar = _gameManager.HealthBar;
         }
         void Update()
         {
@@ -21,6 +23,7 @@ namespace MobileFPS.PlayerUI
 
             UpdatePlayerAmmo();
             UpdatePlayerHealth();
+            HealthBar();
         }
 
         public override void OnStartAuthority()
@@ -31,6 +34,10 @@ namespace MobileFPS.PlayerUI
             PlayerAliveUI();
         }
 
+        void HealthBar()
+        {
+            _healthBar.fillAmount = (float)_playerHealth.CurrentHealth / (float)_playerHealth.MaxHealth;
+        }
         public void PlayerDead()
         {
             _gameManager._deadUI.SetActive( true );

@@ -37,7 +37,7 @@ namespace MobileFPS.PlayerControl
             var currentWeaponAnim = _weaponController.CurrentWeapon;
             float horizontal = Input.GetAxisRaw( "Horizontal" );
             float vertical = Input.GetAxisRaw( "Vertical" );
-            
+
             float tmpSpeed = Input.GetKey( KeyCode.LeftShift ) ? RunSpeed : MoveSpeed;
             if ( _gunBehaviour.IsAim) tmpSpeed = CombatSpeed;
             currentSpeed = tmpSpeed;
@@ -48,7 +48,7 @@ namespace MobileFPS.PlayerControl
             var tmp_Velocity = _characterController.velocity;
             tmp_Velocity.y = 0;
             PlayerCurrentSpeed = tmp_Velocity.magnitude;
-            Debug.Log( "当前移速:" +  PlayerCurrentSpeed);
+            //Debug.Log( "当前移速:" +  PlayerCurrentSpeed);
             
             if ( _gunBehaviour.IsAim ) currentWeaponAnim._anim.SetFloat( "velocity",0 );
             else currentWeaponAnim.DoAnimMovement( PlayerCurrentSpeed );

@@ -10,13 +10,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] Text            _FPS;
     [SerializeField] GameObject      MainCamera;
     [SerializeField] PlayerUIManager _playerUIManager;
-    [SerializeField] GameObject           _crossHair;
+    [SerializeField] GameObject      _crossHair;
+    [SerializeField] Image           _healhBar;
     public           GameObject      _canvas;
     public           GameObject      _deadUI, _aliveUI;
     public           GameObject      Camera    => MainCamera;
     public           Text            Ammo      => _ammo_Text;
     public           Text            Health    => _health_Text;
     public           GameObject      CrossHair => _crossHair;
+    public           Image           HealthBar => _healhBar;
 
     void Awake()
     {

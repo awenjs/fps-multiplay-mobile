@@ -9,13 +9,13 @@ namespace MobileFPS.PlayerHealth
     {
         [SerializeField] PlayerUIManager _playerUIManager;
         [SerializeField] PlayerManager   _playerManager;
-        [SerializeField] int             _maxHealth;
+        public           int             MaxHealth;
         [field: SyncVar]
         public int CurrentHealth { get; private set; }
 
         void Awake()
         {
-            CurrentHealth = _maxHealth;
+            CurrentHealth = MaxHealth;
         }
     
 

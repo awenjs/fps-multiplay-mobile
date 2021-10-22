@@ -831,7 +831,7 @@ MonoBehaviour:
   syncInterval: 0.1
   _playerUIManager: {fileID: 7293007286195232494}
   _playerManager: {fileID: 165518481963425403}
-  _maxHealth: 100
+  MaxHealth: 100
 --- !u!114 &8288277591291120434
 MonoBehaviour:
   m_ObjectHideFlags: 0

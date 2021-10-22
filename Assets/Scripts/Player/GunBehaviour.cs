@@ -26,7 +26,7 @@ public class GunBehaviour : MonoBehaviour
     {
         if ( Input.GetMouseButton( 0 ) && _weaponController.CurrentWeapon.CurrentAmmo != 0)
         {
-            _gunRecoilOffset = Vector3.Slerp( _gunRecoilOffset, _gunFireOffset, 10f * Time.deltaTime );
+            _gunRecoilOffset = Vector3.Slerp( _gunRecoilOffset, _gunFireOffset, 15f * Time.deltaTime );
         }
         else
         {
