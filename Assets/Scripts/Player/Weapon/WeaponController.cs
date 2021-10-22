@@ -17,7 +17,7 @@ namespace MobileFPS.PlayerWeapon
         float                  _lastFireTime;
         CameraController       _cameraController;
         PlayerMove             _playerMove;
-        AimScript              _aimScript;
+        GunBehaviour              _gunBehaviour;
         void Awake()
         {
         }
@@ -31,7 +31,7 @@ namespace MobileFPS.PlayerWeapon
         }
         public override void OnStartAuthority()
         {
-            _aimScript = GetComponentInChildren<AimScript>();
+            _gunBehaviour = GetComponentInChildren<GunBehaviour>();
             _playerMove = GetComponent<PlayerMove>();
             _cam = Camera.main.transform;
             _cameraController = GetComponent<CameraController>();
@@ -59,14 +59,14 @@ namespace MobileFPS.PlayerWeapon
         {
             if ( !Input.GetMouseButton( 0 ) ) return;
 
-            if ( CurrentWeapon.CurrentAmmo == 0 || !CurrentWeapon.IsAllowedToAttack( _lastFireTime ) || _playerMove.PlayerCurrentSpeed > _playerMove.MoveSpeed) return;
+            if (!CanAttack() ) return;
 
             _cameraController.Recoil( CurrentWeapon.WeaponRecoilY );
             _lastFireTime = Time.time;
             CurrentWeapon.UseAmmo();
             CmdRequestAttack( _cam.position, _cam.forward, CurrentWeapon.GetDamage(), CurrentWeapon.WeaponRange );
             
-            if(_playerMove.PlayerCurrentSpeed > 2) return;
+            if(!_gunBehaviour.IsAim) return;
             CurrentWeapon.DoAnimAttack();
         }
 
@@ -79,6 +79,7 @@ namespace MobileFPS.PlayerWeapon
             CurrentWeapon.DoAnimReload();
         }
 
+        public bool CanAttack() => CurrentWeapon.CurrentAmmo != 0 && CurrentWeapon.IsAllowedToAttack( _lastFireTime ) && _playerMove.PlayerCurrentSpeed <= _playerMove.MoveSpeed;
         [Command]
         void CmdRequestAttack( Vector3 camPos, Vector3 camForward, int damage, float range )
         {

@@ -1,6 +1,5 @@
 using Mirror;
 using MobileFPS.PlayerWeapon;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 namespace MobileFPS.PlayerControl
@@ -12,7 +11,7 @@ namespace MobileFPS.PlayerControl
         public          float currentSpeed;
         public          float JumpHeight;
         public          float Gravity;
-        AimScript             _aimScript;
+        GunBehaviour             _gunBehaviour;
         CharacterController   _characterController;
         Transform             _characterTransform;
         Vector3               _moveDirection;
@@ -21,7 +20,7 @@ namespace MobileFPS.PlayerControl
 
         void Start()
         {
-            _aimScript = GetComponentInChildren<AimScript>();
+            _gunBehaviour = GetComponentInChildren<GunBehaviour>();
             _weaponController = GetComponent<WeaponController>();
             _characterController = GetComponent<CharacterController>();
             _characterTransform = transform;
@@ -40,7 +39,7 @@ namespace MobileFPS.PlayerControl
             float vertical = Input.GetAxisRaw( "Vertical" );
             
             float tmpSpeed = Input.GetKey( KeyCode.LeftShift ) ? RunSpeed : MoveSpeed;
-            if ( _aimScript.IsAim) tmpSpeed = CombatSpeed;
+            if ( _gunBehaviour.IsAim) tmpSpeed = CombatSpeed;
             currentSpeed = tmpSpeed;
 
             _moveDirection = _characterTransform.TransformDirection( horizontal, 0, vertical ).normalized;
@@ -51,7 +50,7 @@ namespace MobileFPS.PlayerControl
             PlayerCurrentSpeed = tmp_Velocity.magnitude;
             Debug.Log( "当前移速:" +  PlayerCurrentSpeed);
             
-            if ( _aimScript.IsAim ) currentWeaponAnim._anim.SetFloat( "velocity",0 );
+            if ( _gunBehaviour.IsAim ) currentWeaponAnim._anim.SetFloat( "velocity",0 );
             else currentWeaponAnim.DoAnimMovement( PlayerCurrentSpeed );
         }
 
